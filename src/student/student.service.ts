@@ -27,9 +27,8 @@ export class StudentService {
     createStudentDto: CreateStudentDto,
   ): Promise<{ status: number; message: string; data: any }> {
     try {
+      delete createStudentDto._id;
 
-     delete createStudentDto._id
-      
       const createdStudent = new this.studentModel(createStudentDto);
       const savedStudent = await createdStudent.save();
       return {

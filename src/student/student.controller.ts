@@ -30,7 +30,7 @@ export class StudentController {
     @Body() createStudentDto: CreateStudentDto,
   ): Promise<{ status: number; message: string; data: any }> {
     delete createStudentDto._id;
-    
+
     return this.studentService.create(createStudentDto);
   }
 

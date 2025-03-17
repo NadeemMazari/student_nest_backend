@@ -1,14 +1,22 @@
-import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { StudentService } from './student.service';
+// src/student/student.module.ts
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { StudentController } from './student.controller';
-import { Student, StudentSchema } from './schema/student.schema';
+import { StudentService } from './student.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { StudentSchema } from './schema/student.schema';
+import { AuthModule } from '../auth/auth.module';
+import { AuthMiddleware } from '../auth/auth.middleware';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Student.name, schema: StudentSchema }]),
+    MongooseModule.forFeature([{ name: 'Student', schema: StudentSchema }]),
+    AuthModule,
   ],
-  providers: [StudentService],
   controllers: [StudentController],
+  providers: [StudentService],
 })
-export class StudentModule {}
+export class StudentModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes(StudentController);
+  }
+}
