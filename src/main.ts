@@ -59,12 +59,21 @@ async function bootstrap() {
     .setTitle('Student API')
     .setDescription('API documentation for student management')
     .setVersion('1.0')
-    .addBearerAuth() // ✅ Enable JWT Authentication in Swagger
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+      'access-token', // 👈 This must match @ApiBearerAuth()
+    )
+    // .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document); // Swagger URL: http://localhost:3000/swagger
 
   await app.listen(3000);
+  console.log(`Application is running on: http://localhost:3000`);
 }
 bootstrap();

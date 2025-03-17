@@ -1,4 +1,3 @@
-// src/student/student.module.ts
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { StudentController } from './student.controller';
 import { StudentService } from './student.service';

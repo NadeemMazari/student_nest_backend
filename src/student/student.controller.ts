@@ -10,13 +10,22 @@ import {
   UsePipes,
   ValidationPipe,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './update-student.dto';
-import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiQuery,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('students')
+@ApiBearerAuth('access-token')
 @Controller('students')
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
