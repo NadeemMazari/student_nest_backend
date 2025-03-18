@@ -3,7 +3,7 @@
 // import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 // import { ValidationPipe } from '@nestjs/common';
 // import * as dotenv from 'dotenv';
-// import * as cors from 'cors';
+import * as cors from 'cors';
 
 // dotenv.config();
 
@@ -53,6 +53,13 @@ async function bootstrap() {
 
   // Set global prefix
   app.setGlobalPrefix('api');
+    app.use(
+    cors({
+      origin: '*', // Allow all origins
+      methods: ['GET', 'POST', 'PATCH', 'PUT', 'UPDATE', 'DELETE'], // Allowed HTTP methods
+      allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+    }),
+  );
 
   // Swagger setup
   const config = new DocumentBuilder()
@@ -70,8 +77,9 @@ async function bootstrap() {
     // .addBearerAuth()
     .build();
 
+    
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('swagger', app, document); // Swagger URL: http://localhost:3000/swagger
+  SwaggerModule.setup('student_api/swagger', app, document); // Swagger URL: http://localhost:3000/swagger
 
   await app.listen(3000);
   console.log(`Application is running on: http://localhost:3000`);

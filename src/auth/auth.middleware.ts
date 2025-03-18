@@ -20,6 +20,8 @@ export class AuthMiddleware implements NestMiddleware {
     }
 
     const token = authHeader.split(' ')[1];
+
+  
     console.log('Extracted Token:', token);
 
     try {
